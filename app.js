@@ -70,3 +70,20 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('Service Worker Gagal', err));
     });
 }
+
+// --- BAGIAN REGISTRASI PWA DI app.js ---
+
+// Cek apakah browser mendukung Service Worker
+if ('serviceWorker' in navigator) {
+    // Daftarkan Service Worker saat halaman selesai dimuat
+    window.addEventListener('load', () => {
+        // PENTING: Path harus sesuai, yaitu './sw.js'
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => {
+                console.log('Pendaftaran Service Worker Berhasil. Scope:', reg.scope);
+            })
+            .catch(err => {
+                console.error('Pendaftaran Service Worker Gagal:', err);
+            });
+    });
+}
