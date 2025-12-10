@@ -1,4 +1,4 @@
-const CACHE_NAME = 'catatanku-pwa-v10'; 
+const CACHE_NAME = 'catatanku-pwa-v1'; 
 const assets = [
   './',
   './index.html',
