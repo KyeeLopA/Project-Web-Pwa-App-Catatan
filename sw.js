@@ -1,58 +1,64 @@
-// Nama cache unik untuk aplikasi Anda
-const CACHE_NAME = 'catatanku-pwa-v1';
+const CACHE_NAME = 'catatanku-pwa-v7'; // <-- Versi Cache Terbaru!
 
-// Daftar aset (file) yang harus disimpan ke dalam cache browser
-const urlsToCache = [
-  './', // Ini penting untuk meng-cache halaman utama
+// Daftar semua aset (file) yang harus disimpan agar PWA bisa Offline
+const assets = [
+  './', // Ini penting untuk meng-cache halaman root/utama
   './index.html',
   './style.css',
   './app.js',
   './manifest.json',
-  './logo-aplikasi.jpeg',
+  './icon-logo-aplikasi.jpeg', 
   './icon-512.png'
+  
 ];
 
-// 1. Event 'install': Menyimpan semua aset ke cache
 self.addEventListener('install', event => {
-  console.log('Service Worker: Installing...');
+  console.log('[Service Worker] Installing. Caching resources...');
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Service Worker: Caching assets');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+     
+      return cache.addAll(assets);
+    })
+    .catch(err => {
+        console.error('Failed to cache assets during install:', err);
+    })
   );
+
+  self.skipWaiting();
 });
 
-// 2. Event 'fetch': Mengambil dari cache, jika gagal baru ambil dari network
+// 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Jika file ada di cache, kembalikan dari cache
-        if (response) {
-          return response;
-        }
-        // Jika tidak, ambil dari network (internet)
-        return fetch(event.request);
-      })
+    caches.match(event.request).then(response => {
+      
+      if (response) {
+        return response;
+      }
+      
+      return fetch(event.request);
+    })
+    
   );
 });
 
-// 3. Event 'activate': Menghapus cache lama jika ada update
+
 self.addEventListener('activate', event => {
-  console.log('Service Worker: Activated');
+  console.log('[Service Worker] Activated. Cleaning up old caches...');
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
+         
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Service Worker: Deleting old cache:', cacheName);
+            console.log(`[Service Worker] Deleting old cache: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
       );
     })
   );
+  
+  return self.clients.claim();
 });

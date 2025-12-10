@@ -1,36 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catatan Saya</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="manifest.json" />
-
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#4A90E2" />
-
-    <!-- icon -->
-    <link rel="apple-touch-icon" href="logo-aplikasi.jpeg" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatatanKu Kyee Project</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A90E2">
+    <link rel="apple-touch-icon" href="logo-aplikasi.jpeg">
 </head>
 <body>
 
     <header>
-        <h1>📖 Catatan Saya</h1>
+        <h1>📝 Aplikasi Catatan</h1>
+        <button id="settings-btn">⚙️</button>
     </header>
 
     <main class="container">
-        <div class="input-group">
-            <input type="text" id="note-input" placeholder="Tulis Catatan Baru">
-            <button id="add-btn">simpan</button>
+        <div id="settings-modal">
+            <div class="modal-content">
+                <h3>Pengaturan Aplikasi</h3>
+                <label for="font-select">Pilih Jenis Font:</label>
+                <select id="font-select">
+                    <option value="default">Default (Sans-serif)</option>
+                    <option value="serif">Serif (Times New Roman)</option>
+                    <option value="monospace">Monospace (Code/Ketik)</option>
+                </select>
+                <button id="close-modal-btn">Tutup</button>
+            </div>
         </div>
 
+        <div class="input-group">
+            <input type="text" id="note-input" placeholder="Tulis catatan baru...">
+            <button id="add-btn">Simpan</button>
+        </div>
+        
         <ul id="note-list">
-             </ul>
+        </ul>
+
+        <h2 style="margin-top: 40px; color: #f0f2f5;">📂 Catatan Terarsip</h2>
+        <ul id="archive-list" class="archive-list">
+            </ul>
+        
     </main>
 
     <script src="app.js"></script>

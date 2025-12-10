@@ -1,5 +1,10 @@
+/* 1. Definisi Variabel CSS untuk Font (Wajib untuk Fitur Setting) */
+:root {
+    --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--main-font); 
     margin: 0;
     padding: 0;
     background-color: darkslategrey;
@@ -56,7 +61,7 @@ li {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0,3s ease-in;
+    animation: fadeIn 0.3s ease-in; 
 }
 
 .delete-btn {
@@ -70,6 +75,103 @@ li {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px);}
-    to { opacity: 1; transform: translateY(0);}
+    from { 
+        opacity: 0; 
+        transform: translateY(10px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+/* --- Tampilan Modal Pengaturan --- */
+
+#settings-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+}
+
+#settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    /* FIX: Tambahkan display: none; agar modal tersembunyi secara default */
+    display: none; 
+    backdrop-filter: blur(3px);
+}
+
+#settings-modal > div {
+    background: white;
+    max-width: 90%;
+    width: 350px;
+    margin: 15% auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    animation: slideDown 0.3s ease-out;
+}
+
+#settings-modal h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #4A90E2;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+#settings-modal label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+#font-select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+#close-modal-btn {
+    background: #FF5252;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    float: right;
+    transition: background-color 0.2s; 
+}
+
+#close-modal-btn:hover {
+    background: #e04a4a;
+}
+
+@keyframes slideDown {
+    from { 
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
