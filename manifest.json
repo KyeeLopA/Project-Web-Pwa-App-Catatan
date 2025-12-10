@@ -1,10 +1,12 @@
 {
-  "name": "Catatan",
-  "short_name": "Aplikasi Catatan",
+  "name": "CatatanKu Kyee Project",
+  "short_name": "CatatanKu",
+  "description": "Aplikasi catatan pribadi sederhana berbasis PWA.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#000000",
+  "theme_color": "#008000",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "logo-aplikasi.jpeg",
