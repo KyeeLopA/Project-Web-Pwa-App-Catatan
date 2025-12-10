@@ -5,7 +5,7 @@ const assets = [
   './style.css',
   './app.js',
   './manifest.json',
-  './icon-192.png',
+  './logo-aplikasi.jpeg',
   './icon-512.png' 
   // Jika Anda menggunakan logo-aplikasi.jpeg di HTML, 
   // pastikan ia juga dicache: './logo-aplikasi.jpeg' 
