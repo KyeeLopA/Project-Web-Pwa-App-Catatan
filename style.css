@@ -1,30 +1,63 @@
+/*
+ * style.css - Tampilan Dark Mode / Hitam Abu-Abu Modern (FIXED ALL FEATURES)
+ */
+
+/* 1. Definisi Variabel CSS */
 :root {
     --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --primary-color: #5d92ff;
-    --secondary-color: #b0b0b0; 
+    --primary-color: #5d92ff; /* Biru Neon (Aksen) */
+    --secondary-color: #b0b0b0; /* Abu-abu terang untuk teks sekunder */
     --success-color: #28a745; 
     --danger-color: #dc3545; 
     --warning-color: #ffc107; 
     
-    --header-color: #20232a;
-    --bg-color: #282c34; 
-    --note-bg-color: #3a404c; 
-    --archive-bg-color: #4c525f;
-    --text-color: white; 
+    --bg-color: #282c34; /* Latar Belakang Utama (Hitam Abu-Abu Gelap) */
+    --header-color: #20232a; /* Header Lebih Gelap */
+    --note-bg-color: #3a404c; /* Latar Belakang Catatan (Card - Base) */
+    --archive-bg-color: #4c525f; /* Latar Arsip Sedikit Lebih Terang (Base) */
+    --text-color: #e0e0e0; /* Warna Teks Utama (Putih Terang) */
     
     --border-radius-large: 12px;
     --border-radius-small: 6px;
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
     --box-shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.6);
+
+    /* BARU: Variabel untuk Wallpaper dan Blur */
+    --wallpaper-url: none; 
+    --card-blur: none; 
 }
 
 body {
-    font-family: var(--main-font);
+    font-family: var(--main-font); 
     margin: 0;
     padding: 0;
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--text-color); 
     line-height: 1.6;
+    /* Pastikan z-index default */
+    z-index: 1; 
+}
+
+/* BARU: Gaya Wallpaper dan Overlay */
+body.has-wallpaper {
+    background-image: var(--wallpaper-url);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* Overlay gelap untuk meningkatkan kontras (Efek Blur Kaca bekerja lebih baik di sini) */
+body.has-wallpaper::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Layer gelap semi-transparan */
+    background: rgba(0, 0, 0, 0.4); 
+    z-index: -1; 
 }
 
 header {
@@ -32,16 +65,19 @@ header {
     color: white;
     padding: 18px 15px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+    position: relative; 
+    z-index: 2; /* Di atas body */
 }
 
 .container {
     max-width: 550px;
     margin: 25px auto;
-    padding: 0px;
+    padding: 0 15px;
+    z-index: 2; /* Di atas body */
 }
 
+/* --- Input dan Tombol Simpan --- */
 .input-group {
     display: flex;
     gap: 10px;
@@ -51,17 +87,16 @@ header {
 input#note-input {
     flex: 1;
     padding: 14px 15px;
-    border: 1px solid var(--border-radius-large);
+    border: 1px solid #4c525f;
+    border-radius: var(--border-radius-large);
     font-size: 1em;
-    background-color: var(--note-bg-color);
-    color: var(--text-color);
-    transition: border-color 0.3s var(--box-shadow) 0.3s;
+    background-color: var(--note-bg-color); 
+    color: var(--text-color); 
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
-
 input#note-input::placeholder {
-    color: #888;
+    color: #888; 
 }
-
 input#note-input:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(93, 146, 255, 0.4);
@@ -77,29 +112,28 @@ button#add-btn {
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
-    transition: background-color 0.3s, transfrom 0.1s box-shadow 0.3s;
-    box-shadow: 0 6px 12px rgba(93, 146, 255, 0.3s);
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+    box-shadow: 0 4px 6px rgba(93, 146, 255, 0.3);
 }
-
 button#add-btn:hover {
     background-color: #3b74e2;
     box-shadow: 0 6px 8px rgba(93, 146, 255, 0.4);
 }
-
 button#add-btn:active {
     transform: scale(0.98);
     box-shadow: none;
 }
 
-/* Daftar Catatan */
-
+/* --- Daftar Catatan (Implementasi Blur Kaca) --- */
 ul {
     list-style: none;
     padding: 0;
 }
 
 li {
-    background: var(--note-bg-color);
+    /* Latar belakang semi-transparan agar wallpaper terlihat */
+    background: rgba(58, 64, 76, 0.75); /* Menggunakan note-bg-color dengan opacity 0.75 */
+    
     margin-bottom: 15px;
     padding: 20px;
     border-radius: var(--border-radius-large);
@@ -108,47 +142,51 @@ li {
     align-items: center;
     box-shadow: var(--box-shadow);
     transition: box-shadow 0.3s;
-    animation: fadeIn 0.3s ease-in;
-    border-left: 5px solid var(--primary-color);
+    animation: fadeIn 0.3s ease-in; 
+    border-left: 5px solid var(--primary-color); 
+    
+    /* IMPLEMENTASI BLUR KACA */
+    backdrop-filter: var(--card-blur);
+    -webkit-backdrop-filter: var(--card-blur); 
 }
-
-li:horver {
+li:hover {
     box-shadow: var(--box-shadow-hover);
 }
 
-/* Tanggal dan Waktu */
+.note-text {
+    font-size: 1.1em;
+    color: var(--text-color);
+}
 .note-date {
-    color: var(--secondary-color) !important;
+    color: var(--secondary-color) !important; 
     font-size: 0.75em !important;
 }
 
-/* Tombol Hapus */
-.delete-btn, archive-btn, .unarchive-btn {
+
+/* --- Tombol Aksi --- */
+.delete-btn, .archive-btn, .unarchive-btn {
     border: none;
     padding: 8px 14px;
     border-radius: var(--border-radius-small);
     cursor: pointer;
     margin-left: 10px;
     font-weight: 500;
-    transition: background-color 0.3s, transfrom 0.1s;
-    color: white;
+    transition: background-color 0.3s, transform 0.1s;
+    color: white; 
 }
 
 .delete-btn {
     background-color: var(--danger-color);
 }
-
 .archive-btn {
     background-color: var(--warning-color);
-    color: #343a40;
+    color: #343a40; 
 }
-
 .unarchive-btn {
-    background-color: var(--success-color);
+    background-color: var(--success-color); 
 }
 
-/* Data Arsip Catatan */
-
+/* --- Daftar Arsip --- */
 h2 {
     color: var(--secondary-color);
     font-size: 1.6em;
@@ -157,39 +195,43 @@ h2 {
     margin-bottom: 20px;
     margin-top: 40px !important;
 }
-
 .archive-list li {
-    background: var(--archive-bg-color);
-    opacity: 0.95;
+    background: rgba(76, 82, 95, 0.75); /* Warna archive-bg-color dengan opacity 0.75 */
+    opacity: 1; /* Hapus opacity lama */
     box-shadow: none;
-    border-left: 5px solid var(--secondary-color);
+    border-left: 5px solid var(--secondary-color); 
+    backdrop-filter: var(--card-blur); 
+    -webkit-backdrop-filter: var(--card-blur);
 }
 
-/* Animasi */
+
+/* --- Animasi --- */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
+    from { 
+        opacity: 0; 
         transform: translateY(10px);
     }
-    to {
-        opacity: 1;
+    to { 
+        opacity: 1; 
         transform: translateY(0);
     }
 }
 
-/* Settings */
-.settings-btn {
+
+/* --- FIX DAN GAYA MODAL PENGATURAN --- */
+
+#settings-btn {
     position: absolute;
     right: 15px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%); 
     background: none;
     border: none;
     color: white;
     cursor: pointer;
     font-size: 1.6em;
     z-index: 10;
-    transition: transfrom 0.2s;
+    transition: transform 0.2s;
 }
 
 #settings-modal {
@@ -198,60 +240,128 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.7); 
     z-index: 1000;
-    display: none;
+    display: none; 
     backdrop-filter: blur(8px);
+    display: flex; 
+    justify-content: center;
+    align-items: center;
 }
 
-#settings-modal > div {
-    background: var(--header-color);
+#settings-modal > div.modal-content {
+    background: var(--header-color); 
     color: var(--text-color);
     max-width: 90%;
     width: 350px;
-    margin: 15% auto;
     padding: 30px;
     border-radius: var(--border-radius-large);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); 
     text-align: left;
-    animation: slideDown 0,3s ease-out;
+    animation: slideDown 0.3s ease-out;
 }
 
-#settings-modal h3 { 
+#settings-modal h3 {
     margin-top: 0;
     margin-bottom: 20px;
     color: var(--primary-color);
     font-weight: 400;
-    border-bottom: 1px solid #4c525f;
+    border-bottom: 1px solid #4c525f; 
     padding-bottom: 10px;
 }
 
+#settings-modal label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+/* Gaya untuk Select Font */
 #font-select {
     width: 100%;
     padding: 10px;
     margin: 10px 0 25px 0;
-    border: 1px solid var(--border-radius-small);
+    border: 1px solid #4c525f;
+    border-radius: var(--border-radius-small);
+    font-size: 1em;
+    background-color: var(--note-bg-color); 
     color: var(--text-color);
+    appearance: none; 
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23e0e0e0' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 8px 10px;
 }
 
+/* BARU: Gaya untuk Slider Range Blur */
+#blur-range {
+    width: 80%;
+    margin-top: 10px;
+}
+#blur-value {
+    display: inline-block;
+    width: 15%;
+    text-align: right;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* BARU: Gaya untuk Input File Wallpaper */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px 0;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: transparent;
+    border: none;
+}
+
+/* BARU: Gaya untuk Button Group di Modal */
+.button-group button {
+    padding: 10px 15px;
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#apply-wallpaper-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+#apply-wallpaper-btn:disabled {
+    background-color: #6c757d; 
+    cursor: not-allowed;
+}
+#reset-wallpaper-btn {
+    background-color: var(--danger-color);
+    color: white;
+}
+#reset-wallpaper-btn:hover {
+    background-color: #c82333;
+}
+
+
 #close-modal-btn {
-    background: var(--secondary-color);
+    background: var(--secondary-color); 
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: var(--border-radius-small);
     cursor: pointer;
     font-weight: bold;
-    float: right;
-    transition: background-color 0.2s;
+    margin-top: 10px;
+    transition: background-color 0.2s; 
 }
-
 #close-modal-btn:hover {
     background: #777;
 }
 
 @keyframes slideDown {
-    from {
+    from { 
         opacity: 0;
         transform: translateY(-50px);
     }
@@ -259,4 +369,45 @@ h2 {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ------------------------------------------------------------------- */
+/* --- TAMBAHAN: GAYA KHUSUS MODE FOKUS CATATAN BARU (.note-focus-mode) --- */
+/* ------------------------------------------------------------------- */
+
+body.note-focus-mode #note-list,
+body.note-focus-mode #archive-list,
+body.note-focus-mode h2 {
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.3s ease-in-out;
+}
+
+body.note-focus-mode header {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+body.note-focus-mode .input-group {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 550px;
+    z-index: 1000;
+    margin: 0;
+    padding: 0 15px;
+    transition: transfrom 0.3, top 0.3s;
+}
+
+body.note-focus-mode input#note-input {
+    box-shadow: 0 0 0 5px rgba(93, 146, 255, 01.6);
+    border-color: var(--primary-color);
+}
+
+body.note-focus-mode .container {
+    padding: 0;
+    margin-top: 0;
 }

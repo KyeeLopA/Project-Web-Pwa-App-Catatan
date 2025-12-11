@@ -22,12 +22,34 @@
         <div id="settings-modal">
             <div class="modal-content">
                 <h3>Pengaturan Aplikasi</h3>
+                
                 <label for="font-select">Pilih Jenis Font:</label>
                 <select id="font-select">
                     <option value="default">Default (Sans-serif)</option>
                     <option value="serif">Serif (Times New Roman)</option>
                     <option value="monospace">Monospace (Code/Ketik)</option>
                 </select>
+
+                <div class="blur-setting" style="margin-top: 25px;">
+                    <label for="blur-range">Tingkat Efek Kaca (Blur):</label>
+                    <input type="range" id="blur-range" min="0" max="15" value="0" step="1">
+                    <span id="blur-value">0px</span>
+                </div>
+                
+                <div class="wallpaper-setting">
+                    <label for="wallpaper-file-input" style="margin-top: 25px; display: block; font-weight: 500;">
+                        Pilih Gambar Wallpaper Lokal:
+                    </label>
+                    
+                    <input type="file" id="wallpaper-file-input" accept="image/*">
+                    <input type="hidden" id="wallpaper-data-url">
+                    
+                    <div class="button-group" style="display: flex; gap: 10px; margin-top: 15px; margin-bottom: 25px;">
+                        <button id="apply-wallpaper-btn" style="flex: 1;" disabled>Terapkan Wallpaper</button> 
+                        <button id="reset-wallpaper-btn" style="flex: 1;">Hapus Wallpaper</button>
+                    </div>
+                </div>
+                
                 <button id="close-modal-btn">Tutup</button>
             </div>
         </div>
@@ -42,7 +64,7 @@
 
         <h2 style="margin-top: 40px; color: #f0f2f5;">📂 Catatan Terarsip</h2>
         <ul id="archive-list" class="archive-list">
-            </ul>
+        </ul>
         
     </main>
 
