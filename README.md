@@ -58,4 +58,4 @@ Kami sangat menyambut kontribusi, saran, dan laporan bug untuk meningkatkan apli
 
 ---
 
-### **Dibuat oleh KyeeLopA**
+### **Dibuat oleh Xiao Yurue Kyee**
